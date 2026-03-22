@@ -69,7 +69,6 @@ export function AdDetailDialog({ ad, open, onOpenChange, onAnalyzed }: AdDetailD
                   poster={ad.creative_url ?? undefined}
                   controls
                   className="w-full h-full object-contain"
-                  referrerPolicy="no-referrer"
                   crossOrigin="anonymous"
                 />
               ) : (
