@@ -66,15 +66,18 @@ export function AdDetailDialog({ ad, open, onOpenChange, onAnalyzed }: AdDetailD
               {ad.video_url ? (
                 <video
                   src={ad.video_url}
-                  poster={ad.creative_url}
+                  poster={ad.creative_url ?? undefined}
                   controls
                   className="w-full h-full object-contain"
+                  referrerPolicy="no-referrer"
+                  crossOrigin="anonymous"
                 />
               ) : (
                 <img
-                  src={ad.creative_url}
+                  src={ad.creative_url ?? undefined}
                   alt={ad.headline || 'Ad'}
                   className="w-full h-full object-contain"
+                  referrerPolicy="no-referrer"
                 />
               )}
             </div>

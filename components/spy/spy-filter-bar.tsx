@@ -38,7 +38,7 @@ function FilterSelect({
   label: string
   value: string
   onChange: (val: string) => void
-  options: readonly string[] | string[]
+  options: readonly string[] | string[] | Array<{ value: string; label: string }>
 }) {
   return (
     <select
@@ -48,11 +48,15 @@ function FilterSelect({
       aria-label={label}
     >
       <option value="">{label}</option>
-      {options.map((opt) => (
-        <option key={opt} value={opt}>
-          {opt}
-        </option>
-      ))}
+      {options.map((opt) => {
+        const val = typeof opt === 'string' ? opt : opt.value
+        const lbl = typeof opt === 'string' ? opt : opt.label
+        return (
+          <option key={val} value={val}>
+            {lbl}
+          </option>
+        )
+      })}
     </select>
   )
 }
@@ -78,7 +82,7 @@ export function SpyFilterBar({ filters, onChange, brands }: SpyFilterBarProps) {
         label="Brand"
         value={filters.brand_id}
         onChange={(v) => update('brand_id', v)}
-        options={brands.map((b) => b.brand_name)}
+        options={brands.map((b) => ({ value: b.id, label: b.brand_name }))}
       />
 
       <FilterSelect

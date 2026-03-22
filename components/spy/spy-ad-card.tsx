@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import type { SpyAd } from '@/lib/spy-types'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -16,6 +16,8 @@ interface SpyAdCardProps {
 
 export function SpyAdCard({ ad, onBookmarkToggle, onClick }: SpyAdCardProps) {
   const [bookmarked, setBookmarked] = useState(ad.bookmarked)
+  const [imgError, setImgError] = useState(false)
+  const handleImgError = useCallback(() => setImgError(true), [])
 
   const toggleBookmark = async (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -32,15 +34,18 @@ export function SpyAdCard({ ad, onBookmarkToggle, onClick }: SpyAdCardProps) {
     >
       {/* Thumbnail */}
       <div className="aspect-video bg-muted relative overflow-hidden">
-        {ad.creative_url ? (
+        {ad.creative_url && !imgError ? (
           <img
             src={ad.creative_url}
             alt={ad.headline || 'Ad creative'}
             className="w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+            onError={handleImgError}
           />
         ) : (
-          <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
-            No preview
+          <div className="flex flex-col items-center justify-center h-full text-muted-foreground text-xs gap-1">
+            <span className="text-2xl">{ad.creative_type === 'video' ? '▶' : '🖼'}</span>
+            <span>{ad.brand_name || 'No preview'}</span>
           </div>
         )}
         {/* Rank badge */}

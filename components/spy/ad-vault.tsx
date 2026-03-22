@@ -74,7 +74,7 @@ export function AdVault() {
     )
   }
   if (filters.brand_id) {
-    filtered = filtered.filter((a) => a.brand_name === filters.brand_id)
+    filtered = filtered.filter((a) => a.brand_id === filters.brand_id)
   }
   if (filters.creative_type) {
     filtered = filtered.filter((a) => a.creative_type === filters.creative_type)

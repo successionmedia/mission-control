@@ -17,10 +17,28 @@ interface ApifyAdResult {
       link_url?: string
     }>
     cta_text?: string
+    ctaText?: string
     cta_type?: string
-    videos?: Array<{ video_hd_url?: string; video_sd_url?: string; video_preview_image_url?: string }>
-    images?: Array<{ original_image_url?: string; resized_image_url?: string }>
+    ctaType?: string
+    displayFormat?: string
+    videos?: Array<{
+      videoHdUrl?: string
+      videoSdUrl?: string
+      videoPreviewImageUrl?: string
+      // legacy snake_case fallbacks
+      video_hd_url?: string
+      video_sd_url?: string
+      video_preview_image_url?: string
+    }>
+    images?: Array<{
+      originalImageUrl?: string
+      resizedImageUrl?: string
+      // legacy snake_case fallbacks
+      original_image_url?: string
+      resized_image_url?: string
+    }>
     link_url?: string
+    linkUrl?: string
   }
   startDate?: string
   isActive?: boolean
@@ -49,11 +67,11 @@ function extractAdData(item: ApifyAdResult, rank: number, brandId: string) {
   }
 
   const headline = firstCard?.title || snapshot.title || ''
-  const videoUrl = videos[0]?.video_hd_url || videos[0]?.video_sd_url || null
-  const imageUrl = images[0]?.original_image_url || images[0]?.resized_image_url || null
-  const thumbnailUrl = videos[0]?.video_preview_image_url || imageUrl || null
-  const creativeType = videoUrl ? 'video' : 'image'
-  const ctaType = snapshot.cta_text || snapshot.cta_type || null
+  const videoUrl = videos[0]?.videoHdUrl || videos[0]?.videoSdUrl || videos[0]?.video_hd_url || videos[0]?.video_sd_url || null
+  const imageUrl = images[0]?.originalImageUrl || images[0]?.resizedImageUrl || images[0]?.original_image_url || images[0]?.resized_image_url || null
+  const thumbnailUrl = videos[0]?.videoPreviewImageUrl || videos[0]?.video_preview_image_url || imageUrl || null
+  const creativeType = (videoUrl || snapshot.displayFormat === 'VIDEO') ? 'video' : 'image'
+  const ctaType = snapshot.ctaText || snapshot.cta_text || snapshot.ctaType || snapshot.cta_type || null
   const adLibraryLink = `https://www.facebook.com/ads/library/?id=${adId}`
 
   return {

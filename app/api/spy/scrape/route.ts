@@ -26,12 +26,8 @@ export async function POST(req: NextRequest) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          adActiveStatus: 'active',
-          adType: 'all',
-          countryCode: 'US',
-          pageIds: [brand.page_id],
+          startUrls: [{ url: brand.ad_library_url }],
           resultsLimit: 20,
-          searchType: 'page',
         }),
       }
     )
