@@ -211,6 +211,7 @@ export async function GET(req: NextRequest) {
             rank: adData.rank,
             last_seen: adData.last_seen,
             weeks_in_top10: existing.weeks_in_top10 + weeksIncrement,
+            creative_type: adData.creative_type,
             creative_url: adData.creative_url,
             video_url: adData.video_url,
             ad_copy: adData.ad_copy,
