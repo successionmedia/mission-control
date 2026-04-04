@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { LayoutDashboard, Video, Image, Eye, Search, Lightbulb } from 'lucide-react'
+import { LayoutDashboard, Video, Image, Eye, Search, Lightbulb, LayoutGrid } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const navItems = [
@@ -11,6 +11,7 @@ const navItems = [
   { href: '/static-ads', label: 'Static Ads', icon: Image },
   { href: '/spy', label: 'Ad Spy', icon: Search },
   { href: '/hooks', label: 'Hook Vault', icon: Lightbulb },
+  { href: '/boards', label: 'Boards', icon: LayoutGrid },
 ]
 
 export function Sidebar() {
@@ -24,7 +25,7 @@ export function Sidebar() {
       </div>
       <nav className="flex flex-col gap-1">
         {navItems.map((item) => {
-          const isActive = pathname === item.href
+          const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
           return (
             <Link
               key={item.href}
