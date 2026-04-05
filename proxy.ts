@@ -1,9 +1,8 @@
-// middleware.ts
 import { NextRequest, NextResponse } from 'next/server'
 
 const PUBLIC_PREFIXES = ['/share/', '/login', '/api/auth/']
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl
 
   const isPublic = PUBLIC_PREFIXES.some((prefix) => pathname.startsWith(prefix))
